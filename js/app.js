@@ -28,12 +28,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const radioStream = document.getElementById('radioStream');
     const nowPlaying = document.getElementById('nowPlaying');
     const waveCanvas = document.getElementById('waveCanvas');
+    const volumeSlider = document.getElementById('volumeSlider');
     let isPlaying = false;
     let animationId = null;
-    
-    // URL del stream (ejemplo - reemplazar con el real)
-    const streamUrl = 'https://stream.zeno.fm/radiopatrimonio'; // Placeholder
-    
+
+    // URL directa del stream (SonicPanel, sin puerto, sin metadatos)
+    const streamUrl = 'https://radios.blumhost.es/8204/stream';
+
+    if (radioStream) {
+        radioStream.preload = 'none';
+        radioStream.volume = 0.8;
+    }
+
     btnPlay?.addEventListener('click', () => {
         if (isPlaying) {
             pauseRadio();
@@ -41,23 +47,44 @@ document.addEventListener('DOMContentLoaded', () => {
             playRadio();
         }
     });
-    
+
+    volumeSlider?.addEventListener('input', (e) => {
+        if (radioStream) {
+            radioStream.volume = Number(e.target.value) / 100;
+        }
+    });
+
     function playRadio() {
-        // En producción: radioStream.src = streamUrl;
-        // radioStream.play();
-        isPlaying = true;
-        btnPlay.classList.add('playing');
-        btnPlay.innerHTML = `
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
-            </svg>
-        `;
-        nowPlaying.textContent = '● Reproduciendo en vivo';
-        startWaveAnimation();
+        if (!radioStream) return;
+
+        // Solo asigna el src la primera vez (evita reiniciar el stream innecesariamente)
+        if (!radioStream.src) {
+            radioStream.src = streamUrl;
+        }
+
+        nowPlaying.textContent = 'Conectando...';
+
+        radioStream.play()
+            .then(() => {
+                isPlaying = true;
+                btnPlay.classList.add('playing');
+                btnPlay.innerHTML = `
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+                    </svg>
+                `;
+                nowPlaying.textContent = '● Reproduciendo en vivo';
+                startWaveAnimation();
+            })
+            .catch((err) => {
+                console.error('No se pudo reproducir el stream:', err);
+                nowPlaying.textContent = 'No se pudo conectar';
+            });
     }
-    
+
     function pauseRadio() {
-        // radioStream.pause();
+        if (!radioStream) return;
+        radioStream.pause();
         isPlaying = false;
         btnPlay.classList.remove('playing');
         btnPlay.innerHTML = `
@@ -68,33 +95,33 @@ document.addEventListener('DOMContentLoaded', () => {
         nowPlaying.textContent = 'Radio Patrimonio';
         stopWaveAnimation();
     }
-    
-    // Animación de ondas visuales
+
+    // Animación de ondas visuales (decorativa, acompaña el audio real)
     function startWaveAnimation() {
         const ctx = waveCanvas.getContext('2d');
         const bars = 50;
-        
+
         function draw() {
             const width = waveCanvas.width = waveCanvas.offsetWidth;
             const height = waveCanvas.height = waveCanvas.offsetHeight;
             const barWidth = width / bars;
-            
+
             ctx.clearRect(0, 0, width, height);
             ctx.fillStyle = 'rgba(233, 69, 96, 0.6)';
-            
+
             for (let i = 0; i < bars; i++) {
                 const barHeight = Math.random() * height * 0.8 + height * 0.1;
                 const x = i * barWidth;
                 const y = (height - barHeight) / 2;
                 ctx.fillRect(x, y, barWidth - 2, barHeight);
             }
-            
+
             animationId = requestAnimationFrame(draw);
         }
-        
+
         draw();
     }
-    
+
     function stopWaveAnimation() {
         if (animationId) {
             cancelAnimationFrame(animationId);
@@ -103,7 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const ctx = waveCanvas.getContext('2d');
         ctx.clearRect(0, 0, waveCanvas.width, waveCanvas.height);
     }
-    
+
     // ==========================================
     // 3. PROGRAMACIÓN (Carga desde JSON)
     // ==========================================
@@ -455,4 +482,121 @@ document.addEventListener('DOMContentLoaded', () => {
                                         <strong>${sound.name}</strong>
                                         <span style="color: var(--color-text-muted); font-size: 0.85rem; display: block;">${sound.duration}</span>
                                     </div>
-                                </
+                                </li>
+                            `).join('')}
+                        </ul>
+                    </div>
+                `;
+            }
+        });
+    });
+    
+    // ==========================================
+    // 7. FORMULARIO DE CONTACTO
+    // ==========================================
+    const contactForm = document.getElementById('contactForm');
+    
+    contactForm?.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        const formData = {
+            name: document.getElementById('name').value,
+            email: document.getElementById('email').value,
+            subject: document.getElementById('subject').value,
+            message: document.getElementById('message').value
+        };
+        
+        // Simular envío
+        const btn = contactForm.querySelector('.btn-submit');
+        const originalText = btn.textContent;
+        btn.textContent = 'Enviando...';
+        btn.disabled = true;
+        
+        setTimeout(() => {
+            btn.textContent = '¡Mensaje enviado!';
+            btn.style.background = '#43e97b';
+            
+            setTimeout(() => {
+                btn.textContent = originalText;
+                btn.style.background = '';
+                btn.disabled = false;
+                contactForm.reset();
+            }, 2000);
+        }, 1500);
+        
+        console.log('Formulario enviado:', formData);
+    });
+    
+    // ==========================================
+    // 8. NAVEGACIÓN SUAVE Y SCROLL
+    // ==========================================
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+    
+    // Navbar scroll effect
+    let lastScroll = 0;
+    window.addEventListener('scroll', () => {
+        const currentScroll = window.pageYOffset;
+        const navbar = document.querySelector('.navbar');
+        
+        if (currentScroll > 100) {
+            navbar.style.background = 'rgba(15, 15, 26, 0.95)';
+            navbar.style.padding = '0.75rem 2rem';
+        } else {
+            navbar.style.background = 'rgba(15, 15, 26, 0.85)';
+            navbar.style.padding = '1rem 2rem';
+        }
+        
+        lastScroll = currentScroll;
+    });
+    
+    // ==========================================
+    // 9. ANIMACIONES EN SCROLL
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, observerOptions);
+    
+    // Animar elementos al entrar en viewport
+    document.querySelectorAll('.program-item, .archivo-card, .patrimonio-card').forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(20px)';
+        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(el);
+    });
+    
+    // ==========================================
+    // 10. CARGA DE PROGRAMACIÓN DESDE JSON
+    // ==========================================
+    fetch('data/programacion.json')
+        .then(response => response.json())
+        .then(data => {
+            Object.assign(programacionData, data);
+            console.log('Programación cargada desde JSON:', data);
+            renderProgramacion(getDiaActual());
+        })
+        .catch(error => {
+            console.log('Usando programación por defecto:', error);
+        });
+    
+    console.log('🎵 Radio Patrimonio cargada correctamente');
+});

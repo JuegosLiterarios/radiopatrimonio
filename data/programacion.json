@@ -1,121 +1,370 @@
-                                </li>
-                            `).join('')}
-                        </ul>
-                    </div>
-                `;
-            }
-        });
-    });
-    
-    // ==========================================
-    // 7. FORMULARIO DE CONTACTO
-    // ==========================================
-    const contactForm = document.getElementById('contactForm');
-    
-    contactForm?.addEventListener('submit', (e) => {
-        e.preventDefault();
-        
-        const formData = {
-            name: document.getElementById('name').value,
-            email: document.getElementById('email').value,
-            subject: document.getElementById('subject').value,
-            message: document.getElementById('message').value
-        };
-        
-        // Simular envío
-        const btn = contactForm.querySelector('.btn-submit');
-        const originalText = btn.textContent;
-        btn.textContent = 'Enviando...';
-        btn.disabled = true;
-        
-        setTimeout(() => {
-            btn.textContent = '¡Mensaje enviado!';
-            btn.style.background = '#43e97b';
-            
-            setTimeout(() => {
-                btn.textContent = originalText;
-                btn.style.background = '';
-                btn.disabled = false;
-                contactForm.reset();
-            }, 2000);
-        }, 1500);
-        
-        console.log('Formulario enviado:', formData);
-    });
-    
-    // ==========================================
-    // 8. NAVEGACIÓN SUAVE Y SCROLL
-    // ==========================================
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                target.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
-        });
-    });
-    
-    // Navbar scroll effect
-    let lastScroll = 0;
-    window.addEventListener('scroll', () => {
-        const currentScroll = window.pageYOffset;
-        const navbar = document.querySelector('.navbar');
-        
-        if (currentScroll > 100) {
-            navbar.style.background = 'rgba(15, 15, 26, 0.95)';
-            navbar.style.padding = '0.75rem 2rem';
-        } else {
-            navbar.style.background = 'rgba(15, 15, 26, 0.85)';
-            navbar.style.padding = '1rem 2rem';
-        }
-        
-        lastScroll = currentScroll;
-    });
-    
-    // ==========================================
-    // 9. ANIMACIONES EN SCROLL
-    // ==========================================
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
-    
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
-            }
-        });
-    }, observerOptions);
-    
-    // Animar elementos al entrar en viewport
-    document.querySelectorAll('.program-item, .archivo-card, .patrimonio-card').forEach(el => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(20px)';
-        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-        observer.observe(el);
-    });
-    
-    // ==========================================
-    // 10. CARGA DE PROGRAMACIÓN DESDE JSON
-    // ==========================================
-    // En producción, descomentar esto para cargar desde archivo externo:
-    /*
-    fetch('data/programacion.json')
-        .then(response => response.json())
-        .then(data => {
-            // Actualizar programacionData con los datos del JSON
-            console.log('Programación cargada desde JSON:', data);
-        })
-        .catch(error => {
-            console.log('Usando programación por defecto:', error);
-        });
-    */
-    
-    console.log('🎵 Radio Patrimonio cargada correctamente');
-});
+{
+  "lunes": [
+    {
+      "hora": "07:00",
+      "fin": "09:00",
+      "nombre": "Amanecer Cultural",
+      "desc": "Música y noticias del patrimonio"
+    },
+    {
+      "hora": "09:00",
+      "fin": "12:00",
+      "nombre": "Melodías de Ayer",
+      "desc": "Clásicos de la música chilena"
+    },
+    {
+      "hora": "12:00",
+      "fin": "14:00",
+      "nombre": "Patrimonio Gastronómico",
+      "desc": "Recetas y tradiciones culinarias"
+    },
+    {
+      "hora": "14:00",
+      "fin": "16:00",
+      "nombre": "Crónicas de Ciudad",
+      "desc": "Historias urbanas y barriales"
+    },
+    {
+      "hora": "16:00",
+      "fin": "19:00",
+      "nombre": "Archivo Sonoro",
+      "desc": "Documentales y testimonios"
+    },
+    {
+      "hora": "19:00",
+      "fin": "21:00",
+      "nombre": "Jazz Vespertino",
+      "desc": "Jazz chileno e internacional"
+    },
+    {
+      "hora": "21:00",
+      "fin": "23:00",
+      "nombre": "Leyendas Urbanas Sonoras",
+      "desc": "Relatos y mitos del país"
+    },
+    {
+      "hora": "23:00",
+      "fin": "02:00",
+      "nombre": "Insomnio Cultural",
+      "desc": "Música ambiental y reflexión"
+    },
+    {
+      "hora": "02:00",
+      "fin": "07:00",
+      "nombre": "Hasta el Amanecer",
+      "desc": "Música para la madrugada"
+    }
+  ],
+  "martes": [
+    {
+      "hora": "07:00",
+      "fin": "09:00",
+      "nombre": "Amanecer Cultural",
+      "desc": "Música y noticias del patrimonio"
+    },
+    {
+      "hora": "09:00",
+      "fin": "12:00",
+      "nombre": "Raíces del Norte",
+      "desc": "Música de Arica a Atacama"
+    },
+    {
+      "hora": "12:00",
+      "fin": "14:00",
+      "nombre": "Patrimonio Gastronómico",
+      "desc": "Recetas y tradiciones culinarias"
+    },
+    {
+      "hora": "14:00",
+      "fin": "16:00",
+      "nombre": "Oficios en Voz",
+      "desc": "Testimonios de artesanos"
+    },
+    {
+      "hora": "16:00",
+      "fin": "19:00",
+      "nombre": "Archivo Sonoro",
+      "desc": "Documentales y testimonios"
+    },
+    {
+      "hora": "19:00",
+      "fin": "21:00",
+      "nombre": "Jazz Vespertino",
+      "desc": "Jazz chileno e internacional"
+    },
+    {
+      "hora": "21:00",
+      "fin": "23:00",
+      "nombre": "Lenguas Indígenas",
+      "desc": "Mapudungun, Aymara, Rapa Nui"
+    },
+    {
+      "hora": "23:00",
+      "fin": "02:00",
+      "nombre": "Insomnio Cultural",
+      "desc": "Música ambiental y reflexión"
+    },
+    {
+      "hora": "02:00",
+      "fin": "07:00",
+      "nombre": "Hasta el Amanecer",
+      "desc": "Música para la madrugada"
+    }
+  ],
+  "miercoles": [
+    {
+      "hora": "07:00",
+      "fin": "09:00",
+      "nombre": "Amanecer Cultural",
+      "desc": "Música y noticias del patrimonio"
+    },
+    {
+      "hora": "09:00",
+      "fin": "12:00",
+      "nombre": "Melodías de Ayer",
+      "desc": "Clásicos de la música chilena"
+    },
+    {
+      "hora": "12:00",
+      "fin": "14:00",
+      "nombre": "Patrimonio Gastronómico",
+      "desc": "Recetas y tradiciones culinarias"
+    },
+    {
+      "hora": "14:00",
+      "fin": "16:00",
+      "nombre": "Crónicas de Ciudad",
+      "desc": "Historias urbanas y barriales"
+    },
+    {
+      "hora": "16:00",
+      "fin": "19:00",
+      "nombre": "Archivo Sonoro",
+      "desc": "Documentales y testimonios"
+    },
+    {
+      "hora": "19:00",
+      "fin": "21:00",
+      "nombre": "Folclor Nacional",
+      "desc": "Cuecas, tonadas, valses"
+    },
+    {
+      "hora": "21:00",
+      "fin": "23:00",
+      "nombre": "Leyendas Urbanas Sonoras",
+      "desc": "Relatos y mitos del país"
+    },
+    {
+      "hora": "23:00",
+      "fin": "02:00",
+      "nombre": "Insomnio Cultural",
+      "desc": "Música ambiental y reflexión"
+    },
+    {
+      "hora": "02:00",
+      "fin": "07:00",
+      "nombre": "Hasta el Amanecer",
+      "desc": "Música para la madrugada"
+    }
+  ],
+  "jueves": [
+    {
+      "hora": "07:00",
+      "fin": "09:00",
+      "nombre": "Amanecer Cultural",
+      "desc": "Música y noticias del patrimonio"
+    },
+    {
+      "hora": "09:00",
+      "fin": "12:00",
+      "nombre": "Melodías del Sur",
+      "desc": "Música de la Patagonia"
+    },
+    {
+      "hora": "12:00",
+      "fin": "14:00",
+      "nombre": "Patrimonio Gastronómico",
+      "desc": "Recetas y tradiciones culinarias"
+    },
+    {
+      "hora": "14:00",
+      "fin": "16:00",
+      "nombre": "Memoria Viva",
+      "desc": "Testimonios históricos"
+    },
+    {
+      "hora": "16:00",
+      "fin": "19:00",
+      "nombre": "Archivo Sonoro",
+      "desc": "Documentales y testimonios"
+    },
+    {
+      "hora": "19:00",
+      "fin": "21:00",
+      "nombre": "Jazz Vespertino",
+      "desc": "Jazz chileno e internacional"
+    },
+    {
+      "hora": "21:00",
+      "fin": "23:00",
+      "nombre": "Leyendas Urbanas Sonoras",
+      "desc": "Relatos y mitos del país"
+    },
+    {
+      "hora": "23:00",
+      "fin": "02:00",
+      "nombre": "Insomnio Cultural",
+      "desc": "Música ambiental y reflexión"
+    },
+    {
+      "hora": "02:00",
+      "fin": "07:00",
+      "nombre": "Hasta el Amanecer",
+      "desc": "Música para la madrugada"
+    }
+  ],
+  "viernes": [
+    {
+      "hora": "07:00",
+      "fin": "09:00",
+      "nombre": "Amanecer Cultural",
+      "desc": "Música y noticias del patrimonio"
+    },
+    {
+      "hora": "09:00",
+      "fin": "12:00",
+      "nombre": "Melodías de Ayer",
+      "desc": "Clásicos de la música chilena"
+    },
+    {
+      "hora": "12:00",
+      "fin": "14:00",
+      "nombre": "Patrimonio Gastronómico",
+      "desc": "Recetas y tradiciones culinarias"
+    },
+    {
+      "hora": "14:00",
+      "fin": "16:00",
+      "nombre": "Crónicas de Ciudad",
+      "desc": "Historias urbanas y barriales"
+    },
+    {
+      "hora": "16:00",
+      "fin": "19:00",
+      "nombre": "Archivo Sonoro",
+      "desc": "Documentales y testimonios"
+    },
+    {
+      "hora": "19:00",
+      "fin": "21:00",
+      "nombre": "Jazz Vespertino",
+      "desc": "Jazz chileno e internacional"
+    },
+    {
+      "hora": "21:00",
+      "fin": "23:00",
+      "nombre": "Leyendas Urbanas Sonoras",
+      "desc": "Relatos y mitos del país"
+    },
+    {
+      "hora": "23:00",
+      "fin": "02:00",
+      "nombre": "Insomnio Cultural",
+      "desc": "Música ambiental y reflexión"
+    },
+    {
+      "hora": "02:00",
+      "fin": "07:00",
+      "nombre": "Hasta el Amanecer",
+      "desc": "Música para la madrugada"
+    }
+  ],
+  "sabado": [
+    {
+      "hora": "07:00",
+      "fin": "10:00",
+      "nombre": "Sábado Patrimonial",
+      "desc": "Especiales de fin de semana"
+    },
+    {
+      "hora": "10:00",
+      "fin": "13:00",
+      "nombre": "Feria de Pulgas Sonora",
+      "desc": "Música de ferias y mercados"
+    },
+    {
+      "hora": "13:00",
+      "fin": "15:00",
+      "nombre": "Almuerzo Familiar",
+      "desc": "Música para compartir"
+    },
+    {
+      "hora": "15:00",
+      "fin": "18:00",
+      "nombre": "Rutas Patrimoniales",
+      "desc": "Recorridos sonoros por Chile"
+    },
+    {
+      "hora": "18:00",
+      "fin": "20:00",
+      "nombre": "Conciertos en Vivo",
+      "desc": "Grabaciones de presentaciones"
+    },
+    {
+      "hora": "20:00",
+      "fin": "23:00",
+      "nombre": "Noche de Gala",
+      "desc": "Música clásica y docta"
+    },
+    {
+      "hora": "23:00",
+      "fin": "03:00",
+      "nombre": "Madrugada Cultural",
+      "desc": "Música para la noche larga"
+    }
+  ],
+  "domingo": [
+    {
+      "hora": "07:00",
+      "fin": "10:00",
+      "nombre": "Domingo de Resurrección",
+      "desc": "Música sacra y tradicional"
+    },
+    {
+      "hora": "10:00",
+      "fin": "13:00",
+      "nombre": "Café con Cueca",
+      "desc": "Folclor de todo el país"
+    },
+    {
+      "hora": "13:00",
+      "fin": "15:00",
+      "nombre": "Almuerzo Familiar",
+      "desc": "Música para compartir"
+    },
+    {
+      "hora": "15:00",
+      "fin": "18:00",
+      "nombre": "Cuentos y Leyendas",
+      "desc": "Narración oral para toda la familia"
+    },
+    {
+      "hora": "18:00",
+      "fin": "20:00",
+      "nombre": "Atardecer Patrimonial",
+      "desc": "Música para cerrar la semana"
+    },
+    {
+      "hora": "20:00",
+      "fin": "23:00",
+      "nombre": "Cine en la Radio",
+      "desc": "Bandas sonoras chilenas"
+    },
+    {
+      "hora": "23:00",
+      "fin": "03:00",
+      "nombre": "Madrugada Cultural",
+      "desc": "Música para la noche larga"
+    }
+  ]
+}
