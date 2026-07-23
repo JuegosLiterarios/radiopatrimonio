@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Radio Patrimonio — Escuchar al país</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navegación -->
+    <nav class="navbar">
+        <div class="nav-brand">
+            <span class="nav-icon">📻</span>
+            <span class="nav-title">Radio Patrimonio</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#inicio">Inicio</a></li>
+            <li><a href="#programacion">Programación</a></li>
+            <li><a href="#archivo">Archivo Sonoro</a></li>
+            <li><a href="#patrimonio">Patrimonio</a></li>
+            <li><a href="#mapa">Mapa Sonoro</a></li>
+            <li><a href="#contacto">Contacto</a></li>
+        </ul>
+        <button class="nav-toggle" aria-label="Menú">☰</button>
+    </nav>
+
+    <!-- Hero / Reproductor -->
+    <section id="inicio" class="hero">
+        <div class="hero-bg">
+            <div class="hero-visualizer">
+                <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+                <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+                <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+            </div>
+        </div>
+        <div class="hero-content">
+            <h1>Escuchar al país</h1>
+            <p class="hero-subtitle">Emociones que trascienden generaciones</p>
+            
+            <div class="player-card">
+                <div class="player-status">
+                    <span class="live-badge">● EN VIVO</span>
+                    <span class="current-program" id="currentProgram">Cargando programación...</span>
+                </div>
+                <div class="player-controls">
+                    <button class="btn-play" id="btnPlay" aria-label="Reproducir">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M8 5v14l11-7z"/>
+                        </svg>
+                    </button>
+                    <div class="player-info">
+                        <span class="now-playing" id="nowPlaying">Radio Patrimonio</span>
+                        <span class="track-meta">Chile · Patrimonio Cultural</span>
+                    </div>
+                    <div class="volume-control">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/>
+                        </svg>
+                        <input type="range" class="volume-slider" min="0" max="100" value="80">
+                    </div>
+                </div>
+                <div class="player-wave">
+                    <canvas id="waveCanvas"></canvas>
+                </div>
+            </div>
+            
+            <p class="hero-cta">Haz una pausa. La música que abraza tu memoria.</p>
+        </div>
+    </section>
+
+    <!-- Programación -->
+    <section id="programacion" class="section programacion">
+        <div class="container">
+            <h2 class="section-title">Programación</h2>
+            <p class="section-subtitle">Cada momento del día tiene su historia</p>
+            
+            <div class="program-tabs">
+                <button class="tab-btn active" data-day="lunes">Lun</button>
+                <button class="tab-btn" data-day="martes">Mar</button>
+                <button class="tab-btn" data-day="miercoles">Mié</button>
+                <button class="tab-btn" data-day="jueves">Jue</button>
+                <button class="tab-btn" data-day="viernes">Vie</button>
+                <button class="tab-btn" data-day="sabado">Sáb</button>
+                <button class="tab-btn" data-day="domingo">Dom</button>
+            </div>
+            
+            <div class="program-grid" id="programGrid">
+                <!-- Se llena dinámicamente desde JSON -->
+            </div>
+            
+            <div class="program-now" id="programNow">
+                <div class="now-indicator">
+                    <span class="pulse"></span>
+                    <span>Ahora en vivo</span>
+                </div>
+                <div class="now-content" id="nowContent">
+                    <!-- Se actualiza dinámicamente -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Archivo Sonoro -->
+    <section id="archivo" class="section archivo">
+        <div class="container">
+            <h2 class="section-title">Archivo Sonoro</h2>
+            <p class="section-subtitle">Rescatando voces, sonidos y memorias del país</p>
+            
+            <div class="archivo-filters">
+                <button class="filter-btn active" data-filter="todos">Todos</button>
+                <button class="filter-btn" data-filter="historia">Historia</button>
+                <button class="filter-btn" data-filter="musica">Música Tradicional</button>
+                <button class="filter-btn" data-filter="oficios">Oficios</button>
+                <button class="filter-btn" data-filter="lenguas">Lenguas Indígenas</button>
+                <button class="filter-btn" data-filter="ciudad">Crónicas de Ciudad</button>
+            </div>
+            
+            <div class="archivo-grid" id="archivoGrid">
+                <article class="archivo-card" data-category="historia">
+                    <div class="archivo-cover">
+                        <span class="archivo-duration">24:15</span>
+                        <button class="archivo-play">▶</button>
+                    </div>
+                    <div class="archivo-meta">
+                        <span class="archivo-tag">Historia</span>
+                        <h3>Salitreras de Humberstone</h3>
+                        <p>Testimonios orales de los últimos habitantes del desierto de Atacama</p>
+                        <span class="archivo-date">1960 — 2024</span>
+                    </div>
+                </article>
+                
+                <article class="archivo-card" data-category="musica">
+                    <div class="archivo-cover">
+                        <span class="archivo-duration">18:42</span>
+                        <button class="archivo-play">▶</button>
+                    </div>
+                    <div class="archivo-meta">
+                        <span class="archivo-tag">Música Tradicional</span>
+                        <h3>Cuecas del Maule</h3>
+                        <p>Recopilación de cuecas tradicionales de la región del Maule</p>
+                        <span class="archivo-date">Grabación 2019</span>
+                    </div>
+                </article>
+                
+                <article class="archivo-card" data-category="oficios">
+                    <div class="archivo-cover">
+                        <span class="archivo-duration">32:08</span>
+                        <button class="archivo-play">▶</button>
+                    </div>
+                    <div class="archivo-meta">
+                        <span class="archivo-tag">Oficios</span>
+                        <h3>El Último Alfarero de Quinchamalí</h3>
+                        <p>Documental sonoro sobre la cerámica negra de Quinchamalí</p>
+                        <span class="archivo-date">Documental 2023</span>
+                    </div>
+                </article>
+                
+                <article class="archivo-card" data-category="lenguas">
+                    <div class="archivo-cover">
+                        <span class="archivo-duration">45:30</span>
+                        <button class="archivo-play">▶</button>
+                    </div>
+                    <div class="archivo-meta">
+                        <span class="archivo-tag">Lenguas Indígenas</span>
+                        <h3>Mapuzugun: Voces de la Araucanía</h3>
+                        <p>Conversaciones en mapudungun con traductores y hablantes</p>
+                        <span class="archivo-date">Proyecto 2024</span>
+                    </div>
+                </article>
+                
+                <article class="archivo-card" data-category="ciudad">
+                    <div class="archivo-cover">
+                        <span class="archivo-duration">12:55</span>
+                        <button class="archivo-play">▶</button>
+                    </div>
+                    <div class="archivo-meta">
+                        <span class="archivo-tag">Crónicas de Ciudad</span>
+                        <h3>La Vega Central en la Madrugada</h3>
+                        <p>Los sonidos del mercado antes del amanecer en Santiago</p>
+                        <span class="archivo-date">Grabación 2024</span>
+                    </div>
+                </article>
+                
+                <article class="archivo-card" data-category="musica">
+                    <div class="archivo-cover">
+                        <span class="archivo-duration">28:17</span>
+                        <button class="archivo-play">▶</button>
+                    </div>
+                    <div class="archivo-meta">
+                        <span class="archivo-tag">Música Tradicional</span>
+                        <h3>Tonadas de Chiloé</h3>
+                        <p>Música tradicional de las iglesias de madera de Chiloé</p>
+                        <span class="archivo-date">Archivo 2018</span>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Patrimonio -->
+    <section id="patrimonio" class="section patrimonio">
+        <div class="container">
+            <h2 class="section-title">Patrimonio de Chile</h2>
+            <p class="section-subtitle">Sitios que cuentan nuestra historia</p>
+            
+            <div class="patrimonio-carousel" id="patrimonioCarousel">
+                <div class="patrimonio-track">
+                    <div class="patrimonio-card">
+                        <div class="patrimonio-img" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                            <span class="patrimonio-badge">UNESCO</span>
+                        </div>
+                        <h3>Rapa Nui</h3>
+                        <p>Isla de Pascua</p>
+                        <span class="patrimonio-type">Patrimonio de la Humanidad</span>
+                    </div>
+                    
+                    <div class="patrimonio-card">
+                        <div class="patrimonio-img" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                            <span class="patrimonio-badge">UNESCO</span>
+                        </div>
+                        <h3>Iglesias de Chiloé</h3>
+                        <p>Arquitectura de madera</p>
+                        <span class="patrimonio-type">Patrimonio de la Humanidad</span>
+                    </div>
+                    
+                    <div class="patrimonio-card">
+                        <div class="patrimonio-img" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                            <span class="patrimonio-badge">UNESCO</span>
+                        </div>
+                        <h3>Valparaíso</h3>
+                        <p>Ciudad puerto</p>
+                        <span class="patrimonio-type">Patrimonio de la Humanidad</span>
+                    </div>
+                    
+                    <div class="patrimonio-card">
+                        <div class="patrimonio-img" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                            <span class="patrimonio-badge">UNESCO</span>
+                        </div>
+                        <h3>Humberstone</h3>
+                        <p>Oficinas salitreras</p>
+                        <span class="patrimonio-type">Patrimonio de la Humanidad</span>
+                    </div>
+                    
+                    <div class="patrimonio-card">
+                        <div class="patrimonio-img" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                            <span class="patrimonio-badge">Inmaterial</span>
+                        </div>
+                        <h3>Cueca</h3>
+                        <p>Baile nacional</p>
+                        <span class="patrimonio-type">Patrimonio Inmaterial</span>
+                    </div>
+                </div>
+                <button class="carousel-btn prev">‹</button>
+                <button class="carousel-btn next">›</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mapa Sonoro -->
+    <section id="mapa" class="section mapa">
+        <div class="container">
+            <h2 class="section-title">Mapa Sonoro de Chile</h2>
+            <p class="section-subtitle">Explora los sonidos del territorio</p>
+            
+            <div class="mapa-container">
+                <div class="mapa-visual" id="mapaVisual">
+                    <!-- Mapa SVG simplificado de Chile -->
+                    <svg viewBox="0 0 200 400" class="chile-map">
+                        <path d="M95,20 C100,15 105,20 105,30 L108,50 L110,80 L112,120 L115,160 L118,200 L120,240 L122,280 L118,320 L115,350 L110,380 L105,385 L100,380 L95,350 L90,320 L88,280 L85,240 L82,200 L80,160 L82,120 L85,80 L88,50 L90,30 C90,20 90,20 95,20 Z" 
+                              fill="#2d3436" stroke="#b2bec3" stroke-width="1"/>
+                        
+                        <!-- Puntos interactivos -->
+                        <circle cx="100" cy="30" r="4" class="map-point" data-region="arica" data-title="Arica"/>
+                        <circle cx="105" cy="80" r="4" class="map-point" data-region="antofagasta" data-title="Antofagasta"/>
+                        <circle cx="108" cy="120" r="4" class="map-point" data-region="atacama" data-title="Atacama"/>
+                        <circle cx="112" cy="160" r="4" class="map-point" data-region="coquimbo" data-title="Coquimbo"/>
+                        <circle cx="115" cy="200" r="4" class="map-point" data-region="valparaiso" data-title="Valparaíso"/>
+                        <circle cx="118" cy="240" r="4" class="map-point" data-region="maule" data-title="Maule"/>
+                        <circle cx="120" cy="280" r="4" class="map-point" data-region="biobio" data-title="Biobío"/>
+                        <circle cx="118" cy="320" r="4" class="map-point" data-region="araucania" data-title="La Araucanía"/>
+                        <circle cx="115" cy="350" r="4" class="map-point" data-region="aysen" data-title="Aysén"/>
+                        <circle cx="110" cy="380" r="4" class="map-point" data-region="magallanes" data-title="Magallanes"/>
+                    </svg>
+                    
+                    <div class="mapa-tooltip" id="mapaTooltip"></div>
+                </div>
+                
+                <div class="mapa-info" id="mapaInfo">
+                    <div class="mapa-placeholder">
+                        <span class="mapa-icon">🗺️</span>
+                        <p>Selecciona una región en el mapa para descubrir sus sonidos</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contacto -->
+    <section id="contacto" class="section contacto">
+        <div class="container">
+            <h2 class="section-title">Contacto</h2>
+            <p class="section-subtitle">¿Tienes una historia que contar?</p>
+            
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <span class="contact-icon">📱</span>
+                        <div>
+                            <h4>WhatsApp</h4>
+                            <p>+56 971 350 293</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-icon">✉️</span>
+                        <div>
+                            <h4>Email</h4>
+                            <p>contacto@radiopatrimonio.cl</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-icon">📍</span>
+                        <div>
+                            <h4>Estudio</h4>
+                            <p>Santiago, Chile</p>
+                        </div>
+                    </div>
+                    <div class="contact-social">
+                        <a href="#" class="social-link" aria-label="Instagram">📷</a>
+                        <a href="#" class="social-link" aria-label="Spotify">🎵</a>
+                        <a href="#" class="social-link" aria-label="YouTube">▶️</a>
+                    </div>
+                </div>
+                
+                <form class="contact-form" id="contactForm">
+                    <div class="form-group">
+                        <label for="name">Nombre</label>
+                        <input type="text" id="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Asunto</label>
+                        <select id="subject">
+                            <option>Quiero compartir una historia</option>
+                            <option>Tengo material para el archivo</option>
+                            <option>Propuesta de colaboración</option>
+                            <option>Consulta general</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Mensaje</label>
+                        <textarea id="message" rows="4" required></textarea>
+                    </div>
+                    <button type="submit" class="btn-submit">Enviar mensaje</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <span class="footer-icon">📻</span>
+                    <span>Radio Patrimonio</span>
+                </div>
+                <p class="footer-text">La Radio como patrimonio inmaterial; la memoria digital del mundo.</p>
+                <p class="footer-copy">© 2024 Radio Patrimonio. Escuchar al país.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Audio fallback -->
+    <audio id="radioStream" preload="none"></audio>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
