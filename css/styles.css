@@ -623,143 +623,67 @@ body {
     font-style: italic;
 }
 
-/* Patrimonio */
-.patrimonio {
-    background: var(--color-secondary);
-}
-
-.patrimonio-carousel {
-    position: relative;
-    overflow: hidden;
-}
-
-.patrimonio-track {
-    display: flex;
-    gap: 1.5rem;
-    transition: var(--transition);
-}
-
-.patrimonio-card {
-    min-width: 280px;
-    background: var(--color-card);
-    border-radius: var(--radius);
-    overflow: hidden;
-    border: 1px solid rgba(255,255,255,0.05);
-}
-
-.patrimonio-img {
-    height: 200px;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.patrimonio-badge {
-    background: rgba(0,0,0,0.6);
-    color: white;
-    padding: 0.4rem 0.8rem;
-    border-radius: 4px;
-    font-size: 0.75rem;
-    font-weight: 600;
-}
-
-.patrimonio-card h3 {
-    padding: 1rem 1rem 0.25rem;
-    font-size: 1.2rem;
-}
-
-.patrimonio-card p {
-    padding: 0 1rem;
-    color: var(--color-text-muted);
-    font-size: 0.9rem;
-}
-
-.patrimonio-type {
-    display: block;
-    padding: 0.75rem 1rem 1rem;
-    color: var(--color-gold);
-    font-size: 0.8rem;
-    font-weight: 600;
-}
-
-.carousel-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.1);
-    border: none;
-    color: white;
-    font-size: 1.5rem;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: var(--transition);
-    z-index: 10;
-}
-
-.carousel-btn:hover {
-    background: var(--color-gold);
-    color: var(--color-primary);
-}
-
-.carousel-btn.prev { left: -20px; }
-.carousel-btn.next { right: -20px; }
-
 /* Contacto */
 .contacto {
     background: var(--color-secondary);
+    padding: 3rem 2rem;
+}
+
+.contacto .section-title {
+    font-size: 1.8rem;
+    margin-bottom: 0.3rem;
+}
+
+.contacto .section-subtitle {
+    font-size: 0.9rem;
+    margin-bottom: 1.75rem;
 }
 
 .contact-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 3rem;
-    max-width: 900px;
+    gap: 2rem;
+    max-width: 720px;
     margin: 0 auto;
 }
 
 .contact-item {
     display: flex;
     align-items: flex-start;
-    gap: 1rem;
-    margin-bottom: 1.5rem;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
 }
 
 .contact-icon {
-    font-size: 1.5rem;
+    font-size: 1.15rem;
 }
 
 .contact-item h4 {
-    font-size: 1rem;
-    margin-bottom: 0.25rem;
+    font-size: 0.85rem;
+    margin-bottom: 0.15rem;
     color: var(--color-gold);
 }
 
 .contact-item p {
     color: var(--color-text-muted);
-    font-size: 0.95rem;
+    font-size: 0.8rem;
 }
 
 .contact-social {
     display: flex;
-    gap: 1rem;
-    margin-top: 2rem;
+    gap: 0.75rem;
+    margin-top: 1.25rem;
 }
 
 .social-link {
-    width: 44px;
-    height: 44px;
+    width: 34px;
+    height: 34px;
     border-radius: 50%;
     background: var(--color-card);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.2rem;
+    font-size: 0.95rem;
     text-decoration: none;
     transition: var(--transition);
 }
@@ -771,18 +695,18 @@ body {
 
 .contact-form {
     background: var(--color-card);
-    padding: 2rem;
+    padding: 1.25rem;
     border-radius: var(--radius);
 }
 
 .form-group {
-    margin-bottom: 1.25rem;
+    margin-bottom: 0.85rem;
 }
 
 .form-group label {
     display: block;
-    margin-bottom: 0.5rem;
-    font-size: 0.85rem;
+    margin-bottom: 0.3rem;
+    font-size: 0.75rem;
     font-weight: 500;
     color: var(--color-text-muted);
 }
@@ -791,13 +715,13 @@ body {
 .form-group select,
 .form-group textarea {
     width: 100%;
-    padding: 0.75rem 1rem;
-    border-radius: 8px;
+    padding: 0.5rem 0.7rem;
+    border-radius: 6px;
     border: 1px solid rgba(255,255,255,0.1);
     background: rgba(255,255,255,0.05);
     color: var(--color-text);
     font-family: var(--font-sans);
-    font-size: 0.95rem;
+    font-size: 0.8rem;
     transition: var(--transition);
     outline: none;
 }
@@ -811,13 +735,13 @@ body {
 
 .btn-submit {
     width: 100%;
-    padding: 1rem;
-    border-radius: 8px;
+    padding: 0.7rem;
+    border-radius: 6px;
     border: none;
     background: var(--color-accent);
     color: white;
     font-family: var(--font-sans);
-    font-size: 1rem;
+    font-size: 0.85rem;
     font-weight: 600;
     cursor: pointer;
     transition: var(--transition);
@@ -905,9 +829,6 @@ body {
     .contact-grid {
         grid-template-columns: 1fr;
     }
-    
-    .carousel-btn.prev { left: 0; }
-    .carousel-btn.next { right: 0; }
     
     .section {
         padding: 3rem 1.5rem;

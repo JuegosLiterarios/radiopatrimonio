@@ -331,30 +331,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
     
-    // ==========================================
-    // 5. CARRUSEL DE PATRIMONIO
-    // ==========================================
-    const carousel = document.querySelector('.patrimonio-track');
-    const prevBtn = document.querySelector('.carousel-btn.prev');
-    const nextBtn = document.querySelector('.carousel-btn.next');
-    let carouselPosition = 0;
-    
-    function updateCarousel() {
-        const cardWidth = 280 + 24; // ancho + gap
-        const maxPosition = -(carousel.children.length - 3) * cardWidth;
-        carouselPosition = Math.max(maxPosition, Math.min(0, carouselPosition));
-        carousel.style.transform = `translateX(${carouselPosition}px)`;
-    }
-    
-    prevBtn?.addEventListener('click', () => {
-        carouselPosition += 304;
-        updateCarousel();
-    });
-    
-    nextBtn?.addEventListener('click', () => {
-        carouselPosition -= 304;
-        updateCarousel();
-    });
     
     // ==========================================
     // 7. FORMULARIO DE CONTACTO
@@ -367,7 +343,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const formData = {
             name: document.getElementById('name').value,
             email: document.getElementById('email').value,
-            subject: document.getElementById('subject').value,
             message: document.getElementById('message').value
         };
         
@@ -442,7 +417,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }, observerOptions);
     
     // Animar elementos al entrar en viewport
-    document.querySelectorAll('.program-item, .archivo-card, .patrimonio-card').forEach(el => {
+    document.querySelectorAll('.program-item, .archivo-card').forEach(el => {
         el.style.opacity = '0';
         el.style.transform = 'translateY(20px)';
         el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
